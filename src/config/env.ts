@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import type { SignOptions } from "jsonwebtoken";
 dotenv.config();
 
 const required = (key: string, fallback?: string): string => {
@@ -13,7 +14,7 @@ export const env = {
   apiPrefix: process.env.API_PREFIX ?? "/api/v1",
   mongoUri: required("MONGODB_URI", "mongodb://127.0.0.1:27017/apexora"),
   jwtSecret: required("JWT_SECRET", "dev-secret-change-me"),
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
+  jwtExpiresIn: (process.env.JWT_EXPIRES_IN ?? "7d") as SignOptions["expiresIn"],
   bcryptRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS ?? "10", 10),
   corsOrigin: (process.env.CORS_ORIGIN ?? "http://localhost:5173,http://localhost:8080")
     .split(",")
